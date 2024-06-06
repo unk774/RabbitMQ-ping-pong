@@ -1,0 +1,39 @@
+version: "2.1"
+services:
+  rabbitmq:
+    image: rabbitmq:3.10.7-management
+    hostname: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=rmuser
+      - RABBITMQ_DEFAULT_PASS=rmpassword
+      - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit log_levels [{connection,error},{default,error}] disk_free_limit 2147483648
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    ports:
+      - 15672:15672
+      - 5672:5672
+  player-1:
+    build: ./app
+    environment:
+    - app.player=player1
+    - app.start=true
+    restart: always
+  player-2:
+    build: ./app
+    environment:
+    - app.player=player2
+    - app.start=false
+    restart: always
+  player-3:
+    build: ./app
+    environment:
+    - app.player=player3
+    - app.start=false
+    restart: always
+  player-4:
+    build: ./app
+    environment:
+    - app.player=player4
+    - app.start=false
+    restart: always
