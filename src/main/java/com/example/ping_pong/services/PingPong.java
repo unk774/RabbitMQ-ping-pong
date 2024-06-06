@@ -5,7 +5,6 @@ import com.example.ping_pong.components.PingPongSender;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,15 +41,15 @@ public class PingPong {
     }
 
     private void onPing(String message) {
+        sleepRandom();
         logger.info(message);
         pingPongSender.sendPong(player);
-        sleepRandom();
     }
 
     private void onPong(String message) {
+        sleepRandom();
         logger.info(message);
         pingPongSender.sendPing(player);
-        sleepRandom();
     }
 
     private void sleepRandom() {
